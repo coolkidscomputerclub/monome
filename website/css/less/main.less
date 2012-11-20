@@ -1,0 +1,63 @@
+@import 'normalize.less';
+@import 'mixins.less';
+
+@orange: rgb(244, 83, 58);
+@blue: rgb(129, 208, 224);
+
+@size: 300px;
+
+* {
+
+    .box-sizing;
+
+}
+
+#monome {
+
+    .user-select;
+
+    margin: 100px auto;
+    width: @size;
+    height: @size;
+
+    .key {
+
+        .ir;
+        float: left;
+        margin: 4px;
+        padding: 0;
+        background: #e1e1e1;
+        border: 0;
+
+        &:hover,
+        &:focus {
+
+            background-color: #d0d0d0;
+            .transition (none);
+
+        }
+
+        &:active {
+
+            box-shadow: none;
+            .transition (none);
+
+        }
+
+        &.pressed {
+
+            background: @blue;
+            .transition (all .125s);
+
+        }
+
+        &.active {
+
+            background: lighten(@blue, 15%);
+            .transition (all .125s);
+
+        }
+
+    }
+
+}
