@@ -1,10 +1,20 @@
 /*global AudioContext, webkitAudioContext*/
 
-define(function () {
+define(['monome'], function (monome) {
 
     var sound = {
 
         name: 'sine',
+
+        oscType: 2,
+
+        baseFrequency: 200,
+
+        location: "blazey",
+
+        basePath: "sounds/",
+
+        audioFiles: [],
 
         context: (typeof AudioContent === 'function') ? new AudioContext() : new webkitAudioContext(),
 
@@ -16,46 +26,39 @@ define(function () {
 
             self.key = key;
 
-            self.loadSound();
+            // Configure Oscillator
+            
+            self.osc = self.context.createOscillator();
 
-        },
-
-        loadSound: function () {
-
-            var self = this,
-                request = new XMLHttpRequest();
-
-            request.open('GET', self.url, true);
-
-            request.responseType = 'arraybuffer';
-
-            request.onload = function () {
-
-                var buffer = self.context.createBuffer(request.response, true);
-
-                self.buffer = buffer;
-
-            };
-
-            request.send();
+            self.osc.type = self.oscType;
 
         },
 
         play: function () {
 
-            var self = this,
-                source = self.context.createBufferSource();
+            var self = this;
 
-            source.buffer = self.buffer;
+            self.osc.connect(self.context.destination);
 
-            source.playbackRate.value = self.key.tone * (1 / self.key.monome.size);
+            self.osc.noteOn && self.osc.noteOn(0);
 
-            console.log('Playback rate: ', source.playbackRate.value);
+            console.log("on");
 
-            source.connect(self.context.destination);
+            var timeout = setTimeout(function(){
 
-            source.noteOn(self.context.currentTime);
+                self.osc.frequency.value = self.baseFrequency * self.key.tone;
 
+                self.osc.disconnect();
+
+                console.log("off");
+
+            }, 125);
+
+        },
+
+        pause: function () {
+
+            var self = this;
         }
 
     };

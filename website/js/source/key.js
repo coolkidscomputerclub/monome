@@ -97,6 +97,8 @@ define(['sound'], function (sound) {
 
                 self.$domObject.removeClass('active');
 
+                self.sound.pause();
+
             }, self.monome.phase);
 
         }
