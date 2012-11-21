@@ -1,6 +1,6 @@
 /*global AudioContext, webkitAudioContext*/
 
-define(['monome'], function (monome) {
+define(['monome', 'plugins/jquery.easing'], function (monome) {
 
     var sound = {
 
@@ -38,6 +38,8 @@ define(['monome'], function (monome) {
 
             self.delayNode = self.context.createDelayNode();
 
+            self.filter = self.context.createBiquadFilter();
+
         },
 
         setLocation: function () {
@@ -72,11 +74,19 @@ define(['monome'], function (monome) {
 
                 value: .1
 
-            }, self.key.monome.phase / 2, 'linear');
+            }, self.key.monome.phase, 'easeInOutQuad');
+
+            // Gain -> Filter
+
+            self.osc.connect(self.filter);
+
+            self.filter.type = 1;
+
+            self.filter.frequency.value = 200;
 
             // Connect to destination
 
-            self.gainNode.connect(self.context.destination);
+            self.filter.connect(self.context.destination);
 
             // Play tone
 
