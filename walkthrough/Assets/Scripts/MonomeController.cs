@@ -3,8 +3,10 @@ using System.Collections;
 
 public class MonomeController : MonoBehaviour {
 	
-	public  float startTime; 
+	public  float startTime  = 0.0f; 
+	public  float timePassed = 0.0f;
 	public  int phase        = 0;
+	public  int prev         = 8;
 	private int amountRows   = 9;
 	private int amountPerRow = 9;
 	
@@ -30,20 +32,19 @@ public class MonomeController : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-		float timePassed = Time.time - startTime;
-		int prevCol = phase;
-		if (phase == 0) {
-			prevCol = 9;
-		}
+		timePassed += Time.deltaTime;
 		if (timePassed >= 0.125f) {
 			
+			startTime = 0.0f;
+			timePassed = 0.0f;
+			prev = phase;
 			phase++;
 			if (phase > 8) {
 				phase = 0;
-				prevCol = 8;
+				prev  = 8;
 			}
 			
-			GameObject[] prevColumn = GameObject.FindGameObjectsWithTag("col"+(prevCol));
+			GameObject[] prevColumn = GameObject.FindGameObjectsWithTag("col"+(prev+1));
 			foreach (GameObject square in prevColumn) {
 				square.renderer.material.color = baseColour;
 			}
