@@ -45,7 +45,7 @@
   </ItemGroup>
   <ItemGroup>
      <Compile Include="Assets\CharacterAnimation.cs" />
-     <Compile Include="Assets\MonomeController.cs" />
+     <Compile Include="Assets\Scripts\MonomeController.cs" />
  <Reference Include="Library\ScriptAssemblies\Assembly-UnityScript-firstpass">
  <HintPath>Library\ScriptAssemblies\Assembly-UnityScript-firstpass.dll</HintPath>
  </Reference>
