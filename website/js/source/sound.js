@@ -40,6 +40,14 @@ define(['monome'], function (monome) {
 
         },
 
+        setLocation: function () {
+
+            var self = this;
+
+            var activeLocation = $(":radio[name=location]:checked").val();
+
+        },
+
         play: function () {
 
             var self = this;
@@ -48,25 +56,23 @@ define(['monome'], function (monome) {
 
             self.osc.connect(self.gainNode);
 
-            self.gainNode.gain.value = .2;
+            // Prevent Distortion
 
-            // Ramp in / out
+            var activeCount = $(".active").length;
+
+            console.log(activeCount);
+
+            self.gainNode.gain.value = (0.5 / Math.max(activeCount));
+
+            console.log("Gain: " + self.gainNode.gain.value);
+
+            // Ramp out
 
             $(self.gainNode.gain).animate({ 
 
-                value: 1
+                value: .1
 
-            }, self.key.monome.phase / 2, 'linear', function() {
-
-                $(self.gainNode.gain).animate({ 
-
-                    value: .2 
-
-                }, self.key.monome.phase / 2, 'linear');
-
-                console.log("callback success");
-
-            });
+            }, self.key.monome.phase / 2, 'linear');
 
             // Connect to destination
 
