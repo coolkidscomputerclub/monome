@@ -6,9 +6,9 @@ define(['monome'], function (monome) {
 
         name: 'sine',
 
-        oscType: 2,
+        oscType: 0,
 
-        baseFrequency: 200,
+        baseFrequency: 100,
 
         location: "blazey",
 
@@ -26,11 +26,17 @@ define(['monome'], function (monome) {
 
             self.key = key;
 
-            // Configure Oscillator
+            // Configure oscillator
             
             self.osc = self.context.createOscillator();
 
             self.osc.type = self.oscType;
+
+            // Configure filters
+            
+            self.gainNode = self.context.createGainNode();
+
+            self.delayNode = self.context.createDelayNode();
 
         },
 
@@ -38,27 +44,48 @@ define(['monome'], function (monome) {
 
             var self = this;
 
-            self.osc.connect(self.context.destination);
+            // Route through gain node
+
+            self.osc.connect(self.gainNode);
+
+            self.gainNode.gain.value = .2;
+
+            // Ramp in / out
+
+            $(self.gainNode.gain).animate({ 
+
+                value: 1
+
+            }, self.key.monome.phase / 2, 'linear', function() {
+
+                $(self.gainNode.gain).animate({ 
+
+                    value: .2 
+
+                }, self.key.monome.phase / 2, 'linear');
+
+                console.log("callback success");
+
+            });
+
+            // Connect to destination
+
+            self.gainNode.connect(self.context.destination);
+
+            // Play tone
+
+            self.osc.frequency.value = self.baseFrequency * self.key.tone;
 
             self.osc.noteOn && self.osc.noteOn(0);
 
-            console.log("on");
-
             var timeout = setTimeout(function(){
 
-                self.osc.frequency.value = self.baseFrequency * self.key.tone;
+                // Stop tone
 
                 self.osc.disconnect();
 
-                console.log("off");
-
             }, 125);
 
-        },
-
-        pause: function () {
-
-            var self = this;
         }
 
     };
