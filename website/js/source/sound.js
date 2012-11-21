@@ -60,7 +60,7 @@ define(['monome', 'plugins/jquery.easing'], function (monome) {
 
             console.log(activeCount);
 
-            self.gainNode.gain.value = (0.5 / Math.max(activeCount));
+            self.gainNode.gain.value = (0.1 / Math.max(activeCount));
 
             console.log("Gain: " + self.gainNode.gain.value);
 

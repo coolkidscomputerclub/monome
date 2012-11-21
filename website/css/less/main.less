@@ -3,6 +3,7 @@
 
 @orange: rgb(244, 83, 58);
 @blue: rgb(129, 208, 224);
+@green: rgb(102, 198, 140);
 
 @size: 300px;
 
@@ -12,10 +13,90 @@
 
 }
 
+#splash {
+
+    width: 250px;
+    margin: 200px auto 0 auto;
+
+    h2 {
+
+        text-align: center;
+        color: darken(#E1E1E1, 30%);
+        margin: 0 0 40px 0;
+
+    }
+
+    .location {
+
+        height: 50px;
+        width: 250px;
+        margin: 10px 0;
+        display: block;
+        background: #E1E1E1;
+        border: none;
+        color: darken(#E1E1E1, 30%);
+        //text-transform: uppercase;
+        font-weight: 800;
+        -webkit-appearance: none;
+
+    }
+
+    #blazey:hover { 
+
+        color: #FFFFFF;
+        background: @blue; 
+
+    }
+
+    #austell:hover { 
+
+        color: #FFFFFF;
+        background: @orange; 
+
+    }
+
+    #fowey:hover { 
+
+        color: #FFFFFF;
+        background: @green; 
+
+    }
+
+}
+
+#loader {
+
+    width: 400px;
+    height: 200px;
+    text-align: center;
+    margin: 320px auto 0 auto;
+
+    img {
+
+        height: 16px;
+        width: 16px;
+        margin: -2px 0 0 0;
+
+    }
+
+    span {
+
+        margin: 0 0 0 10px;
+        display: inline-block;
+        font-size: 16px;
+        font-weight: 800;
+
+    }
+
+    .blazey { color: @blue; }
+    .austell { color: @orange; }
+    .fowey { color: @green; }
+
+}
+
 #monome {
 
     .user-select;
-
     margin: 100px auto;
     width: @size;
     height: @size;

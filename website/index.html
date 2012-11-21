@@ -12,19 +12,29 @@
     </head>
     <body>
 
-        <div id="monome">
+        <div id="monome" class="hidden">
 
             <!-- Buttons generated here -->
 
         </div>
 
-        <form>
+        <div id="splash">
 
-            <input type="radio" class="location" name="location" value="1" checked="true"> St. Blazey <br/>
-            <input type="radio" class="location" name="location" value="2"> St. Austell <br/>
-            <input type="radio" class="location" name="location" value="3"> Parr <br/>
+            <h2>Hey, where are you?</h2>
 
-        </form>
+            <button class="location" id="blazey">St. Blazey</button>
+            <button class="location" id="austell">St. Austell</button>
+            <button class="location" id="fowey">Fowey</button>
+
+        </div>
+
+        <div id="loader" class="hidden">
+
+            <img src="img/ajax-loader.gif" />
+
+            <span class="loading">Waiting for others to connect&hellip;</span>
+
+        </div>
 
         <script>
             var config = {

@@ -8,6 +8,8 @@ require(['plugins/log', 'jquery', 'monome'], function (log, $, monome) {
 
 		monome: monome,
 
+		location: {},
+
 		init: function () {
 
 			var self = this;
@@ -26,6 +28,8 @@ require(['plugins/log', 'jquery', 'monome'], function (log, $, monome) {
 
 			var self = this;
 
+			var currentLocation;
+
 			$(window).on('keypress', function (e) {
 
 				if (e.keyCode === 32) {
@@ -35,6 +39,20 @@ require(['plugins/log', 'jquery', 'monome'], function (log, $, monome) {
 					self.monome.clear();
 
 				}
+
+			});
+
+			$(".location").click(function () {
+
+				self.location.name = $(this).attr("id");
+
+				console.log("Current location: " + self.location.name);
+
+				$("#splash").addClass("hidden");
+
+				$("#loader").removeClass("hidden");
+
+				$(".loading").addClass(self.location.name);
 
 			});
 
