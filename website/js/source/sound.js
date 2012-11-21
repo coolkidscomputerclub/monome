@@ -32,17 +32,7 @@ define(['monome', 'plugins/jquery.easing'], function (monome) {
             
             self.gainNode = self.context.createGainNode();
 
-            self.delayNode = self.context.createDelayNode();
-
             self.filter = self.context.createBiquadFilter();
-
-        },
-
-        setLocation: function () {
-
-            var self = this;
-
-            var activeLocation = $(":radio[name=location]:checked").val();
 
         },
 
@@ -50,31 +40,27 @@ define(['monome', 'plugins/jquery.easing'], function (monome) {
 
             var self = this;
 
+            var activeCount = Math.max($(".active").length);
+
+            console.log(activeCount);
+
             // Route through gain node
 
             self.osc.connect(self.gainNode);
 
-            // Prevent Distortion
-
-            var activeCount = $(".active").length;
-
-            console.log(activeCount);
-
-            self.gainNode.gain.value = (0.1 / Math.max(activeCount));
-
-            console.log("Gain: " + self.gainNode.gain.value);
+            self.gainNode.gain.value = 1 / activeCount;
 
             // Ramp out
 
             $(self.gainNode.gain).animate({ 
 
-                value: .1
+                value: 0
 
             }, self.key.monome.phase, 'easeInOutQuad');
 
             // Gain -> Filter
 
-            self.osc.connect(self.filter);
+            self.gainNode.connect(self.filter);
 
             self.filter.type = 1;
 

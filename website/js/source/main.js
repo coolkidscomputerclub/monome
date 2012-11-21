@@ -10,6 +10,8 @@ require(['plugins/log', 'jquery', 'monome'], function (log, $, monome) {
 
 		location: {},
 
+		development: true,
+
 		init: function () {
 
 			var self = this;
@@ -40,22 +42,36 @@ require(['plugins/log', 'jquery', 'monome'], function (log, $, monome) {
 
 				}
 
-			});
+			})
 
-			$(".location").click(function () {
+			// Disable location select for monome dev
 
-				self.location.name = $(this).attr("id");
+			if (!self.development) {
 
-				console.log("Current location: " + self.location.name);
+				$(".location").click(function () {
+
+					self.location.name = $(this).attr("id");
+
+					console.log("Current location: " + self.location.name);
+
+					$("#splash").addClass("hidden");
+
+					$("#monome").removeClass("hidden");
+
+					$(".loading").addClass(self.location.name);
+
+				});
+
+			} else {
 
 				$("#splash").addClass("hidden");
 
-				$("#loader").removeClass("hidden");
+				$("#loader").addClass("hidden");
 
-				$(".loading").addClass(self.location.name);
+				$("#monome").removeClass("hidden");
 
-			});
-
+			}
+			
 		},
 
 		socketConnect: function () {
