@@ -48,7 +48,7 @@ define(['monome', 'plugins/jquery.easing'], function (monome) {
 
             self.osc.connect(self.gainNode);
 
-            self.gainNode.gain.value = 1 / activeCount;
+            self.gainNode.gain.value = 0.5 / activeCount;
 
             // Ramp out
 
