@@ -16,11 +16,15 @@ function handler (req, res) {
 
 io.sockets.on('connection', function (socket) {
 
+	// on joining, send a welcome message
+
 	socket.emit('message', {
 
 		message: 'Congrats, your penis fits in the socket!'
 
 	});
+
+	// when the client sends registration, store their details (location) and send back a debug message
 
 	socket.on('register', function (data) {
 
@@ -34,11 +38,19 @@ io.sockets.on('connection', function (socket) {
 
 		};
 
+		socket.emit('message', {
+
+			message: 'Hi, ' + data.name + '!'
+
+		});
+
 	});
 
 	socket.on('press', function (data) {
 
 		var i;
+
+		// when the client sends a press, pass that press on to everyone but the person who sent it.
 
 		for (i in locations) {
 

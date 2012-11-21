@@ -1,8 +1,6 @@
 /*global io*/
 
-// add 'socket.io'
-
-require(['plugins/log', 'jquery', 'monome'], function (log, $, monome) {
+require(['plugins/log', 'jquery', 'monome', 'socket.io'], function (log, $, monome) {
 
 	var main = {
 
@@ -18,7 +16,7 @@ require(['plugins/log', 'jquery', 'monome'], function (log, $, monome) {
 
 			self.bindEvents();
 
-			// self.socketConnect();
+			self.socketConnect();
 
 			console.log('Main initiated: ', self);
 
@@ -46,13 +44,15 @@ require(['plugins/log', 'jquery', 'monome'], function (log, $, monome) {
 
 				self.location.name = $(this).attr("id");
 
-				console.log("Current location: " + self.location.name);
+				self.registerSocket();
 
 				$("#splash").addClass("hidden");
 
 				$("#loader").removeClass("hidden");
 
 				$(".loading").addClass(self.location.name);
+
+				console.log("Current location: ", self.location.name);
 
 			});
 
@@ -62,7 +62,7 @@ require(['plugins/log', 'jquery', 'monome'], function (log, $, monome) {
 
 			var self = this;
 
-			self.socket = io.connect('http://iamsaul.co.uk:8080');
+			self.socket = io.connect('//' + location.hostname + ':8080');
 
 			self.bindSocketEvents();
 
@@ -72,17 +72,19 @@ require(['plugins/log', 'jquery', 'monome'], function (log, $, monome) {
 
 			var self = this;
 
-			self.socket.on('join', function (data) {
+			self.socket.on('message', function (data) {
 
-				self.user = data;
-
-			});
-
-			self.socket.on('key', function (data) {
-
-				console.log('Key data:', data);
+				console.log('Message: ', data.message);
 
 			});
+
+		},
+
+		registerSocket: function () {
+
+			var self = this;
+
+			self.socket.emit('register', self.location);
 
 		}
 
