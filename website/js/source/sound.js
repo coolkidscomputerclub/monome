@@ -10,10 +10,6 @@ define(['monome', 'plugins/jquery.easing'], function (monome) {
 
         baseFrequency: 100,
 
-        location: "blazey",
-
-        basePath: "sounds/",
-
         audioFiles: [],
 
         context: (typeof AudioContent === 'function') ? new AudioContext() : new webkitAudioContext(),
