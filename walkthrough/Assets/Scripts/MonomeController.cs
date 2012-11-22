@@ -22,6 +22,7 @@ public class MonomeController : MonoBehaviour {
 				Vector3 pos = new Vector3((-i*1.2f),0, row*1.2f);
 				GameObject clone = Instantiate(monomeSquare, gameObject.transform.position + pos, Quaternion.identity) as GameObject;
 				clone.transform.parent = gameObject.transform;
+				clone.SendMessage("SetID", (row * amountPerRow) + (i+1));
 				clone.tag = "col" + (i+1);
 				clone.renderer.material.color = baseColour;
 			}
@@ -33,7 +34,7 @@ public class MonomeController : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 		timePassed += Time.deltaTime;
-		if (timePassed >= 0.125f) {
+		if (timePassed >= 0.250f) {
 			
 			startTime = 0.0f;
 			timePassed = 0.0f;
@@ -46,12 +47,12 @@ public class MonomeController : MonoBehaviour {
 			
 			GameObject[] prevColumn = GameObject.FindGameObjectsWithTag("col"+(prev+1));
 			foreach (GameObject square in prevColumn) {
-				square.renderer.material.color = baseColour;
+				square.SendMessage("UnHighlight");
 			}
 			
 			GameObject[] column = GameObject.FindGameObjectsWithTag("col"+(phase+1));
 			foreach (GameObject square in column) {
-				square.renderer.material.color = activeColour;
+				square.SendMessage("Highlight");
 			}
 			
 		}
