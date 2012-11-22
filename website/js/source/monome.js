@@ -18,6 +18,8 @@ define(['key'], function (key) {
 
         keySpacing: 8,
 
+        synced: false,
+
         init: function (main) {
 
             var self = this,
@@ -57,7 +59,17 @@ define(['key'], function (key) {
 
                 }
 
-                self.activateStep(self.step);
+                if (self.synced === false) {
+
+                    self.activateStep(self.step);
+
+                } else {
+
+                    self.synced = false;
+
+                    self.step = 0;
+
+                }
 
             }, self.phase);
 

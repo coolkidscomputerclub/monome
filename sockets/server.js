@@ -71,6 +71,14 @@ io.sockets.on('connection', function (socket) {
 
 	});
 
+	socket.on('sync', function (data) {
+
+		io.sockets.emit('sync', data);
+
+		oscClient.send('/sync', JSON.stringify(data));
+
+	});
+
 	socket.on('disconnect', function () {
 
 		delete locations[socket.id];

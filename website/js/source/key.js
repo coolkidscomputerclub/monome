@@ -52,11 +52,11 @@ define(['sound'], function (sound) {
 
                 if ($this.hasClass('pressed')) {
 
-                    self.clear();
+                    self.clear(self.monome.main.location.name);
 
                 } else {
 
-                    self.press();
+                    self.press(self.monome.main.location.name);
 
                 }
 
@@ -72,11 +72,9 @@ define(['sound'], function (sound) {
 
             self.pressed = true;
 
-            self.$domObject.addClass('pressed');
-
             // if the key has been pressed by our client
 
-            if (location === undefined) {
+            if (location === main.location.name) {
 
                 data = {
 
@@ -96,7 +94,13 @@ define(['sound'], function (sound) {
 
                 main.socket.emit('press', data);
 
+            } else {
+
+                self.remote = true;
+
             }
+
+            self.$domObject.addClass('pressed ' + location);
 
         },
 
@@ -110,7 +114,7 @@ define(['sound'], function (sound) {
 
             self.$domObject.removeClass('pressed');
 
-            if (location === undefined) {
+            if (location === main.location.name) {
 
                 data = {
 
@@ -131,6 +135,8 @@ define(['sound'], function (sound) {
                 main.socket.emit('press', data);
 
             }
+
+            self.$domObject.removeClass('fowey blazey austell pressed');
 
         },
 

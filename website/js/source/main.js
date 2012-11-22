@@ -37,7 +37,17 @@ require(['plugins/log', 'jquery', 'monome', 'socket.io'], function (log, $, mono
 
 				}
 
-			})
+			});
+
+			$('#sync').on('click', function (e) {
+
+				e.preventDefault();
+
+				self.socket.emit('sync', self.location);
+
+				return false;
+
+			});
 
 			// Disable location select for monome dev
 
@@ -51,7 +61,7 @@ require(['plugins/log', 'jquery', 'monome', 'socket.io'], function (log, $, mono
 
 					$("#splash").addClass("hidden");
 
-					$("#monome").removeClass("hidden");
+					$("#monome, #sync").removeClass("hidden");
 
 				});
 
@@ -99,7 +109,32 @@ require(['plugins/log', 'jquery', 'monome', 'socket.io'], function (log, $, mono
 
 				// press (or clear) the necessary key and give it a class for the relevant location
 
+				var key = self.monome.keys[data.key.id];
+
+				if (key.pressed === false) {
+
+					key.press(data.location.name);
+
+				} else {
+
+					key.clear(data.location.name);
+
+				}
+
+
 				console.log('Press received from: ', data, data.location.name, data.key.id);
+
+			});
+
+			self.socket.on('sync', function (data) {
+
+				console.log('Synchronised by ' + data.name + '!');
+
+				clearInterval(self.monome.interval);
+
+				self.monome.synced = true;
+
+				self.monome.start();
 
 			});
 
