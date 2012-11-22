@@ -19,26 +19,24 @@
         </div>
 
         <div id="splash">
-
             <h2>Hey, where are you?</h2>
 
             <button class="location" id="blazey">St. Blazey</button>
-            <button class="location" id="austell">St. Austell</button>
-            <button class="location" id="fowey">Fowey</button>
 
+            <button class="location" id="austell">St. Austell</button>
+
+            <button class="location" id="fowey">Fowey</button>
         </div>
 
         <div id="loader" class="hidden">
-
-            <img src="img/ajax-loader.gif" />
+            <img src="img/ajax-loader.gif" alt="loader">
 
             <span class="loading">Waiting for others to connect&hellip;</span>
-
         </div>
 
         <script>
             var config = {
-                    debugMode: 1
+                    debugMode: true
                 },
                 require = {
                     baseUrl: (config.debugMode) ? 'js/source/' : 'js',

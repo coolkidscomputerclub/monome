@@ -24,9 +24,8 @@ require(['plugins/log', 'jquery', 'monome', 'socket.io'], function (log, $, mono
 
 		bindEvents: function () {
 
-			var self = this;
-
-			var currentLocation;
+			var self = this,
+				currentLocation;
 
 			$(window).on('keypress', function (e) {
 
@@ -38,23 +37,41 @@ require(['plugins/log', 'jquery', 'monome', 'socket.io'], function (log, $, mono
 
 				}
 
-			});
+			})
 
-			$(".location").click(function () {
+			// Disable location select for monome dev
 
-				self.location.name = $(this).attr("id");
+			if (config.debugMode === true) {
 
-				self.registerSocket();
+				$(".location").click(function () {
 
-				$("#splash").addClass("hidden");
+					self.location.name = $(this).attr("id");
 
-				// $("#loader").removeClass("hidden").addClass(self.location.name);
+					self.socket.emit('join', self.location);
 
-				$('#monome').removeClass('hidden');
+					$("#splash").addClass("hidden");
 
-				console.log("Current location: ", self.location.name);
+					$("#monome").removeClass("hidden");
 
-			});
+				});
+
+			} else {
+
+				$(".location").click(function () {
+
+					self.location.name = $(this).attr("id");
+
+					self.socket.emit('join', self.location);
+
+					$("#splash").addClass("hidden");
+
+					// extra step of waiting to receive registrations here
+
+					$("#loader").removeClass("hidden").addClass(self.location.name);
+
+				});
+
+			}
 
 		},
 
@@ -62,7 +79,7 @@ require(['plugins/log', 'jquery', 'monome', 'socket.io'], function (log, $, mono
 
 			var self = this;
 
-			self.socket = io.connect('//' + location.hostname + ':8080');
+			self.socket = io.connect('http://' + location.hostname + ':8080');
 
 			self.bindSocketEvents();
 
@@ -85,14 +102,6 @@ require(['plugins/log', 'jquery', 'monome', 'socket.io'], function (log, $, mono
 				console.log('Press received from: ', data.location.name, data.key.id);
 
 			});
-
-		},
-
-		registerSocket: function () {
-
-			var self = this;
-
-			self.socket.emit('register', self.location);
 
 		}
 

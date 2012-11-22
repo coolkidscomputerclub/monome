@@ -26,7 +26,7 @@ io.sockets.on('connection', function (socket) {
 
 	// when the client sends registration, store their details (location) and send back a debug message
 
-	socket.on('register', function (data) {
+	socket.on('join', function (data) {
 
 		locations[socket.id] = {
 
