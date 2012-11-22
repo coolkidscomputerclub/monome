@@ -137,7 +137,7 @@ define(['key'], function (key) {
 
         },
 
-        clear: function () {
+        clear: function (location) {
 
             var self = this,
                 length = self.keys.length;
@@ -146,7 +146,7 @@ define(['key'], function (key) {
 
                 if (self.keys[i].pressed === true) {
 
-                    self.keys[i].clear();
+                    self.keys[i].clear(location);
 
                 }
 

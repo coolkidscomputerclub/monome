@@ -33,7 +33,7 @@ require(['plugins/log', 'jquery', 'monome', 'socket.io'], function (log, $, mono
 
 					e.preventDefault();
 
-					self.monome.clear();
+					self.monome.clear(self.location.name);
 
 				}
 
@@ -79,7 +79,8 @@ require(['plugins/log', 'jquery', 'monome', 'socket.io'], function (log, $, mono
 
 			var self = this;
 
-			self.socket = io.connect('http://' + location.hostname + ':8080');
+			self.socket = io.connect('http://192.168.0.2:8080');
+			// self.socket = io.connect('http://' + location.hostname + ':8080');
 
 			self.bindSocketEvents();
 
@@ -98,7 +99,6 @@ require(['plugins/log', 'jquery', 'monome', 'socket.io'], function (log, $, mono
 			self.socket.on('press', function (data) {
 
 				// press (or clear) the necessary key and give it a class for the relevant location 
-				
 				var key = self.monome.keys[data.key.id];
 
 				if (key.pressed === false) {
