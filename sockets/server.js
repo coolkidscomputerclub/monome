@@ -1,5 +1,8 @@
 var webServer = require('http').createServer(handler),
 	io = require('socket.io').listen(webServer),
+	osc = require('node-osc'),
+	oscClient = new osc.Client('192.168.0.5', 8888),
+	oscServer = new osc.Server(1337, '127.0.0.1'),
 	locations = {};
 
 webServer.listen(8080);
@@ -44,8 +47,6 @@ io.sockets.on('connection', function (socket) {
 
 		});
 
-		console.log(locations);
-
 	});
 
 	socket.on('press', function (data) {
@@ -62,6 +63,8 @@ io.sockets.on('connection', function (socket) {
 
 		}
 
+		oscClient.send('/press', JSON.stringify(data));
+
 	});
 
 	socket.on('disconnect', function () {
@@ -69,5 +72,11 @@ io.sockets.on('connection', function (socket) {
 		delete locations[socket.id];
 
 	});
+
+});
+
+oscServer.on("press", function (msg, rinfo) {
+
+	console.log("Press message: " + msg);
 
 });

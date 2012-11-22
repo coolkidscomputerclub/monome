@@ -97,9 +97,9 @@ require(['plugins/log', 'jquery', 'monome', 'socket.io'], function (log, $, mono
 
 			self.socket.on('press', function (data) {
 
-				// press the necessary key and give it a class for the relevant location
+				// press (or clear) the necessary key and give it a class for the relevant location
 
-				console.log('Press received from: ', data.location.name, data.key.id);
+				console.log('Press received from: ', data, data.location.name, data.key.id);
 
 			});
 

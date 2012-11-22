@@ -39,7 +39,18 @@ define(['monome', 'plugins/jquery.easing'], function (monome) {
         play: function () {
 
             var self = this,
-                activeCount = $(".active").length;
+                monome = self.key.monome,
+                activeCount = 0;
+
+            for (var i = 0, j = monome.steps[monome.step]; i < j.length; i++) {
+
+                if (monome.steps[monome.step][i].pressed === true) {
+
+                    activeCount++;
+
+                }
+
+            }
 
             // Route through gain node
 
@@ -47,7 +58,7 @@ define(['monome', 'plugins/jquery.easing'], function (monome) {
 
             // Prevent Distortion
 
-            self.gainNode.gain.value = (0.5 / Math.max(activeCount));
+            self.gainNode.gain.value = 0.8 / activeCount;
 
             // Ramp out
 

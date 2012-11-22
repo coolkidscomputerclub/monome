@@ -86,7 +86,9 @@ define(['sound'], function (sound) {
 
                         id: self.id
 
-                    }
+                    },
+
+                    state: 1
 
                 };
 
@@ -98,13 +100,37 @@ define(['sound'], function (sound) {
 
         },
 
-        clear: function () {
+        clear: function (location) {
 
-            var self = this;
+            var self = this,
+                main = self.monome.main,
+                data;
 
             self.pressed = false;
 
             self.$domObject.removeClass('pressed');
+
+            if (location === undefined) {
+
+                data = {
+
+                    location: main.location,
+
+                    key: {
+
+                        id: self.id
+
+                    },
+
+                    state: 0
+
+                };
+
+                console.log('Emitting clear: ', data);
+
+                main.socket.emit('press', data);
+
+            }
 
         },
 
