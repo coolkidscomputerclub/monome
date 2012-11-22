@@ -12,7 +12,7 @@ require(['plugins/log', 'jquery', 'monome', 'socket.io'], function (log, $, mono
 
 			var self = this;
 
-			self.monome.generate();
+			self.monome.init(self);
 
 			self.bindEvents();
 
@@ -48,9 +48,9 @@ require(['plugins/log', 'jquery', 'monome', 'socket.io'], function (log, $, mono
 
 				$("#splash").addClass("hidden");
 
-				$("#loader").removeClass("hidden");
+				// $("#loader").removeClass("hidden").addClass(self.location.name);
 
-				$(".loading").addClass(self.location.name);
+				$('#monome').removeClass('hidden');
 
 				console.log("Current location: ", self.location.name);
 
@@ -75,6 +75,12 @@ require(['plugins/log', 'jquery', 'monome', 'socket.io'], function (log, $, mono
 			self.socket.on('message', function (data) {
 
 				console.log('Message: ', data.message);
+
+			});
+
+			self.socket.on('press', function (data) {
+
+				console.log('Press received from: ', data.location.name, data.key.id);
 
 			});
 

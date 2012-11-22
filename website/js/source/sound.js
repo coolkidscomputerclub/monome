@@ -23,13 +23,13 @@ define(['monome', 'plugins/jquery.easing'], function (monome) {
             self.key = key;
 
             // Configure oscillator
-            
+
             self.osc = self.context.createOscillator();
 
             self.osc.type = self.oscType;
 
             // Configure filters
-            
+
             self.gainNode = self.context.createGainNode();
 
             self.delayNode = self.context.createDelayNode();
@@ -48,7 +48,8 @@ define(['monome', 'plugins/jquery.easing'], function (monome) {
 
         play: function () {
 
-            var self = this;
+            var self = this,
+                activeCount = $(".active").length;
 
             // Route through gain node
 
@@ -56,17 +57,11 @@ define(['monome', 'plugins/jquery.easing'], function (monome) {
 
             // Prevent Distortion
 
-            var activeCount = $(".active").length;
-
-            console.log(activeCount);
-
             self.gainNode.gain.value = (0.1 / Math.max(activeCount));
-
-            console.log("Gain: " + self.gainNode.gain.value);
 
             // Ramp out
 
-            $(self.gainNode.gain).animate({ 
+            $(self.gainNode.gain).animate({
 
                 value: .1
 

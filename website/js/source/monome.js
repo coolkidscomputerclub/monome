@@ -18,6 +18,29 @@ define(['key'], function (key) {
 
         keySpacing: 8,
 
+        init: function (main) {
+
+            var self = this,
+                i;
+
+            self.main = main;
+
+            for (i = 1; i <= self.size; i++) {
+
+                self.steps[i] = [];
+
+            }
+
+            self.keySize = (self.$domObject.width() - (self.size * self.keySpacing)) / self.size;
+
+            console.log(self.keySize);
+
+            self.addKeys();
+
+            self.start();
+
+        },
+
 		start: function () {
 
             var self = this;
@@ -58,29 +81,6 @@ define(['key'], function (key) {
 
         },
 
-        generate: function () {
-
-            var self = this,
-                i;
-
-            for (i = 1; i <= self.size; i++) {
-
-                self.steps[i] = [];
-
-            }
-
-            self.keySize = (self.$domObject.width() - (self.size * self.keySpacing)) / self.size;
-
-            console.log(self.keySize);
-
-            self.addKeys();
-
-            // self.setSize();
-
-            self.start();
-
-        },
-
         addKeys: function () {
 
             var self = this,
@@ -115,7 +115,7 @@ define(['key'], function (key) {
 
                 self.steps[step].push(thisKey);
 
-                self.keys.push(thisKey);
+                self.keys[keyCount] = thisKey;
 
                 keyCount++;
 
@@ -137,36 +137,12 @@ define(['key'], function (key) {
 
         },
 
-        setSize: function () {
-
-            var self = this,
-                $key = self.$keys.eq(0),
-                keyWidth,
-                keySpacing,
-                keySize;
-
-            keyWidth = parseInt($key.css('width'), 10);
-
-            keySpacing = parseInt($key.css('margin-right'), 10) * 2;
-
-            keySize = keyWidth + keySpacing;
-
-            self.$domObject.css({
-
-                width: self.size * keySize,
-
-                height: self.size * keySize
-
-            });
-
-        },
-
         clear: function () {
 
             var self = this,
                 length = self.keys.length;
 
-            for (var i = 0; i < length; i++) {
+            for (var i = 1; i < length; i++) {
 
                 if (self.keys[i].pressed === true) {
 

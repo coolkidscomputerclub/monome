@@ -44,19 +44,19 @@ io.sockets.on('connection', function (socket) {
 
 		});
 
+		console.log(locations);
+
 	});
 
 	socket.on('press', function (data) {
 
-		var i;
-
 		// when the client sends a press, pass that press on to everyone but the person who sent it.
 
-		for (i in locations) {
+		for (var i in locations) {
 
 			if (locations.hasOwnProperty(i) && i !== socket.id) {
 
-				locations.i.socket.emit('press', data);
+				locations[i].socket.emit('press', data);
 
 			}
 

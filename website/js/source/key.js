@@ -64,13 +64,37 @@ define(['sound'], function (sound) {
 
         },
 
-        press: function () {
+        press: function (location) {
 
-            var self = this;
+            var self = this,
+                main = self.monome.main,
+                data;
 
             self.pressed = true;
 
             self.$domObject.addClass('pressed');
+
+            // if the key has been pressed by our client
+
+            if (location === undefined) {
+
+                data = {
+
+                    location: main.location,
+
+                    key: {
+
+                        id: self.id
+
+                    }
+
+                };
+
+                console.log('Emitting press: ', data);
+
+                main.socket.emit('press', data);
+
+            }
 
         },
 
