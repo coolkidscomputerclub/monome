@@ -34,6 +34,30 @@ define(['monome', 'plugins/jquery.easing'], function (monome) {
 
             self.filter = self.context.createBiquadFilter();
 
+            // Set location multiplier
+
+            var currentLocation = 1;
+
+            switch(currentLocation) {
+
+                case 1:
+                    self.baseFrequency = self.baseFrequency * 1;
+                    break;
+
+                case 2:
+                    self.baseFrequency = self.baseFrequency * 1.3;
+                    break;
+
+                case 3:
+                    self.baseFrequency = self.baseFrequency * 1.6;
+                    break;
+
+            }
+
+            // Play tone
+
+            self.osc.frequency.value = self.baseFrequency * self.key.tone;
+
         },
 
         play: function () {
@@ -41,6 +65,7 @@ define(['monome', 'plugins/jquery.easing'], function (monome) {
             var self = this,
                 monome = self.key.monome,
                 activeCount = 0;
+
 
             for (var i = 0, j = monome.steps[monome.step]; i < j.length; i++) {
 
@@ -79,10 +104,6 @@ define(['monome', 'plugins/jquery.easing'], function (monome) {
             // Connect to destination
 
             self.filter.connect(self.context.destination);
-
-            // Play tone
-
-            self.osc.frequency.value = self.baseFrequency * self.key.tone;
 
             self.osc.noteOn && self.osc.noteOn(0);
 
