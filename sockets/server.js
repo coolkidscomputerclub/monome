@@ -2,10 +2,12 @@ var webServer = require('http').createServer(handler),
 	io = require('socket.io').listen(webServer),
 	osc = require('node-osc'),
 	oscClient = new osc.Client('192.168.0.5', 8888),
-	oscServer = new osc.Server(1337, '127.0.0.1'),
+	oscServer = new osc.Server(1338, '127.0.0.1'),
 	locations = {};
 
 webServer.listen(8080);
+
+console.log('Server: ', oscServer);
 
 function handler (req, res) {
 
@@ -63,7 +65,17 @@ io.sockets.on('connection', function (socket) {
 
 		}
 
+		console.log('To the OSC server: ', JSON.stringify(data));
+
 		oscClient.send('/press', JSON.stringify(data));
+
+	});
+
+	socket.on('sync', function (data) {
+
+		io.sockets.emit('sync', data);
+
+		oscClient.send('/sync', JSON.stringify(data));
 
 	});
 
@@ -75,8 +87,27 @@ io.sockets.on('connection', function (socket) {
 
 });
 
-oscServer.on("press", function (msg, rinfo) {
+oscServer.on('/press', function (msg, rinfo) {
 
-	console.log("Press message: " + msg);
+	var oscData = JSON.parse(msg[1]),
+		data = {
+
+			location: {
+
+				name: "blazey"
+
+			},
+
+			key: {
+
+				id: oscData.id,
+
+				state: oscData.state
+
+			}
+
+		};
+
+	io.sockets.emit('press', data);
 
 });

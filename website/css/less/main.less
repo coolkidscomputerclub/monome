@@ -133,16 +133,67 @@
 
         }
 
-        &.blazey { background: @blue }
-        &.austell { background: @orange }
-        &.fowey { background: @green }
-        
+        &.blazey {
+
+            background: @blue;
+
+            &.active {
+
+                background: lighten(@blue, 15%);
+
+            }
+
+        }
+
+        &.austell {
+
+            background: @orange;
+
+            &.active {
+
+                background: lighten(@orange, 15%);
+
+            }
+
+        }
+
+        &.fowey {
+
+            background: @green;
+
+            &.active {
+
+                background: lighten(@green, 15%);
+
+            }
+
+        }
+
         &.active {
 
-            background: lighten(@blue, 15%);
             .transition (all .125s);
 
         }
+
+    }
+
+}
+
+#sync {
+
+    position: absolute;
+    left: 20px;
+    top: 20px;
+    padding: 5px 10px;
+    font-size: 10px;
+    color: #fff;
+    text-transform: uppercase;
+    background: #222;
+    border: 0;
+
+    &:hover {
+
+        background: red;
 
     }
 

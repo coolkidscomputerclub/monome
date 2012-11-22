@@ -82,11 +82,11 @@ define(['sound'], function (sound) {
 
                     key: {
 
-                        id: self.id
+                        id: self.id,
 
-                    },
+                        state: 1
 
-                    state: 1
+                    }
 
                 };
 
@@ -122,11 +122,11 @@ define(['sound'], function (sound) {
 
                     key: {
 
-                        id: self.id
+                        id: self.id,
 
-                    },
+                        state: 0
 
-                    state: 0
+                    }
 
                 };
 
