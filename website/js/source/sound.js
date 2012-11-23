@@ -34,29 +34,7 @@ define(['monome', 'plugins/jquery.easing'], function (monome) {
 
             self.filter = self.context.createBiquadFilter();
 
-            // Set location multiplier
-
-            var currentLocation = 1;
-
-            switch(currentLocation) {
-
-                case 1:
-                    self.baseFrequency = self.baseFrequency * 1;
-                    break;
-
-                case 2:
-                    self.baseFrequency = self.baseFrequency * 1.3;
-                    break;
-
-                case 3:
-                    self.baseFrequency = self.baseFrequency * 1.6;
-                    break;
-
-            }
-
-            // Play tone
-
-            self.osc.frequency.value = self.baseFrequency * self.key.tone;
+            self.filter.type = 0;
 
         },
 
@@ -64,7 +42,8 @@ define(['monome', 'plugins/jquery.easing'], function (monome) {
 
             var self = this,
                 monome = self.key.monome,
-                activeCount = 0;
+                activeCount = 0,
+                currentLocation = self.key.monome.main.location.name;
 
 
             for (var i = 0, j = monome.steps[monome.step]; i < j.length; i++) {
@@ -97,13 +76,34 @@ define(['monome', 'plugins/jquery.easing'], function (monome) {
 
             self.gainNode.connect(self.filter);
 
-            self.filter.type = 1;
-
             self.filter.frequency.value = 200;
 
             // Connect to destination
 
             self.filter.connect(self.context.destination);
+
+            // Play tone
+
+
+            switch (self.key.location) {
+
+                case "blazey":
+                    self.osc.frequency.value = self.baseFrequency * self.key.tone;
+                    break;
+
+                case "austell":
+                    self.osc.frequency.value = (self.baseFrequency * 1.3) * self.key.tone;
+                    break;
+
+                case "fowey":
+                    self.osc.frequency.value = (self.baseFrequency * 1.6) * self.key.tone;
+                    break;
+
+            }
+
+            console.log(self.key.location);
+
+            //self.osc.frequency.value = self.baseFrequency * self.key.tone;
 
             self.osc.noteOn && self.osc.noteOn(0);
 

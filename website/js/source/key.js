@@ -72,6 +72,8 @@ define(['sound'], function (sound) {
 
             self.pressed = true;
 
+            self.location = location;
+            
             // if the key has been pressed by our client
 
             if (location === main.location.name) {
