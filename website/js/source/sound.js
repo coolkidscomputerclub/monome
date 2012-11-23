@@ -45,7 +45,6 @@ define(['monome', 'plugins/jquery.easing'], function (monome) {
                 activeCount = 0,
                 currentLocation = self.key.monome.main.location.name;
 
-
             for (var i = 0, j = monome.steps[monome.step]; i < j.length; i++) {
 
                 if (monome.steps[monome.step][i].pressed === true) {
@@ -70,7 +69,7 @@ define(['monome', 'plugins/jquery.easing'], function (monome) {
 
                 value: 0
 
-            }, self.key.monome.phase, 'easeInOutQuad');
+            }, monome.phase, 'easeInOutQuad');
 
             // Gain -> Filter
 
@@ -101,10 +100,6 @@ define(['monome', 'plugins/jquery.easing'], function (monome) {
 
             }
 
-            console.log(self.key.location);
-
-            //self.osc.frequency.value = self.baseFrequency * self.key.tone;
-
             self.osc.noteOn && self.osc.noteOn(0);
 
             var timeout = setTimeout(function(){
@@ -113,7 +108,7 @@ define(['monome', 'plugins/jquery.easing'], function (monome) {
 
                 self.osc.disconnect();
 
-            }, 125);
+            }, monome.phase);
 
         }
 

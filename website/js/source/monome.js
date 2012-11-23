@@ -35,8 +35,6 @@ define(['key'], function (key) {
 
             self.keySize = (self.$domObject.width() - (self.size * self.keySpacing)) / self.size;
 
-            console.log(self.keySize);
-
             self.addKeys();
 
             self.start();
