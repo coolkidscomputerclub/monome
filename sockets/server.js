@@ -1,13 +1,11 @@
 var webServer = require('http').createServer(handler),
 	io = require('socket.io').listen(webServer),
 	osc = require('node-osc'),
-	oscClient = new osc.Client('192.168.0.5', 8888),
+	oscClient = new osc.Client('169.254.186.246', 8888),
 	oscServer = new osc.Server(1338, '127.0.0.1'),
 	locations = {};
 
 webServer.listen(8080);
-
-console.log('Server: ', oscServer);
 
 function handler (req, res) {
 
