@@ -1,7 +1,8 @@
 .DS_Store
-walkthrough/Temp/*
-walkthrough/Library/*
+/walkthrough/Temp/*
+/walkthrough/Library/*
 
+*.csproj
 Assembly-CSharp.csproj
 Assembly-CSharp.pidb
 Assembly-CSharp-Editor.csproj
